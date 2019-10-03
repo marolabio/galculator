@@ -16,7 +16,8 @@ class App extends Component {
     value: null,
     displayValue: "0",
     operator: null,
-    waitingForOperand: false
+    waitingForOperand: false,
+    memory: null
   };
 
   clearAll = () => {
@@ -24,7 +25,8 @@ class App extends Component {
       value: null,
       displayValue: "0",
       operator: null,
-      waitingForOperand: false
+      waitingForOperand: false,
+      memory: null
     });
   };
 
@@ -128,6 +130,30 @@ class App extends Component {
     });
   }
 
+  memorySave = () => {
+    const { displayValue } = this.state;
+    this.setState({
+      memory: parseFloat(displayValue)
+    });
+  };
+
+  memoryRead = () => {
+    const { memory } = this.state;
+    this.setState({
+      displayValue: String(memory)
+    });
+  };
+
+  memoryPlus = () => {
+    const { displayValue, memory } = this.state;
+    const memoryPlusCurrentValue =
+      parseFloat(memory) + parseFloat(displayValue);
+    this.setState({
+      displayValue: String(memoryPlusCurrentValue),
+      memory: memoryPlusCurrentValue
+    });
+  };
+
   onInput = key => {
     if (key === "Enter") key = "=";
 
@@ -149,8 +175,14 @@ class App extends Component {
       this.toggleSign();
     } else if (key === "sqrt") {
       this.inputSqrt();
+    } else if (key === "MS") {
+      this.memorySave();
+    } else if (key === "MR") {
+      this.memoryRead();
+    } else if (key === "M+") {
+      this.memoryPlus();
     } else {
-      console.log("test");
+      console.log("Parentheses");
     }
   };
 

@@ -6,7 +6,7 @@
   width: 450px;
   margin: auto;
   padding: 15px;
-  background-color:#313131;
+  background-color: #303030;
 }
 
 .result input {
@@ -31,6 +31,11 @@ button {
 
 button:hover {
   background-color: #525252;
+}
+
+button:disabled {
+  background: #282828;
+  color: #525252;
 }
 
 .row {

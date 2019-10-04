@@ -149,8 +149,30 @@ class App extends Component {
     const memoryPlusCurrentValue =
       parseFloat(memory) + parseFloat(displayValue);
     this.setState({
-      displayValue: String(memoryPlusCurrentValue),
       memory: memoryPlusCurrentValue
+    });
+  };
+
+  memoryMinus = () => {
+    const { displayValue, memory } = this.state;
+
+    const memoryPlusCurrentValue =
+      parseFloat(memory) - parseFloat(displayValue);
+    
+    if(memoryPlusCurrentValue === 0) {
+      this.setState({
+        memory: null
+      });
+    }
+
+    this.setState({
+      memory: memoryPlusCurrentValue
+    });
+  };
+
+  memoryClear = () => {
+    this.setState({
+      memory: null
     });
   };
 
@@ -181,8 +203,10 @@ class App extends Component {
       this.memoryRead();
     } else if (key === "M+") {
       this.memoryPlus();
+    } else if (key === "M-") {
+      this.memoryMinus();
     } else {
-      console.log("Parentheses");
+      this.memoryClear();
     }
   };
 
@@ -195,12 +219,12 @@ class App extends Component {
   }
 
   render() {
-    const { displayValue } = this.state;
+    const { displayValue, memory } = this.state;
     return (
       <div className="app">
         <div className="calculator">
           <Result value={displayValue} />
-          <Keypad onInput={this.onInput} />
+          <Keypad onInput={this.onInput} memory={memory} />
         </div>
       </div>
     );
